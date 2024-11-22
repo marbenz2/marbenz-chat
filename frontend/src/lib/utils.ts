@@ -31,3 +31,7 @@ export function formatMessageTime(date: string) {
     );
   }
 }
+
+export function getImageFromPdf(pdf: string) {
+  return pdf.replace(".pdf", ".webp");
+}

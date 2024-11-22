@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useChatStore } from "../store/useChatStore";
 import { useAuthStore } from "../store/useAuthStore";
 import SidebarSkeleton from "./skeletons/SidebarSkeleton";
-import { Users } from "lucide-react";
+import { ChevronsRight, Users } from "lucide-react";
 
 const Sidebar = () => {
   const { getUsers, users, selectedUser, setSelectedUser, isUsersLoading } =
@@ -10,10 +10,15 @@ const Sidebar = () => {
 
   const { onlineUsers, authUser } = useAuthStore();
   const [showOnlineOnly, setShowOnlineOnly] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
     getUsers();
   }, [getUsers]);
+
+  useEffect(() => {
+    if (selectedUser) setIsOpen(false);
+  }, [selectedUser]);
 
   const isCurrentUserSuperUser = authUser?.isSuperUser;
 
@@ -30,14 +35,32 @@ const Sidebar = () => {
   if (isUsersLoading) return <SidebarSkeleton />;
 
   return (
-    <aside className="h-full w-16 lg:w-72 border-r border-base-300 flex flex-col transition-all duration-200">
-      <div className="border-b border-base-300 w-full p-5">
+    <aside
+      className={`relative h-full ${
+        isOpen ? "w-20" : "w-0"
+      } border-none sm:w-20 lg:w-72 sm:border-r border-base-300 flex flex-col transition-all duration-200`}
+    >
+      <button
+        onClick={() => setIsOpen(!isOpen)}
+        className="absolute top-1/2 -right-12 btn btn-circle opacity-20 hover:opacity-100 sm:hidden z-30"
+      >
+        {isOpen ? (
+          <ChevronsRight className="size-5 transform rotate-180" />
+        ) : (
+          <ChevronsRight className="size-5" />
+        )}
+      </button>
+      <div
+        className={`flex flex-col border-b border-base-300 w-full p-5 gap-2 ${
+          isOpen ? "" : "hidden sm:flex"
+        }`}
+      >
         <div className="flex items-center gap-2">
           <Users className="size-6" />
           <span className="font-medium hidden lg:block">Kontakte</span>
         </div>
         {/* Online filter toggle */}
-        <div className="mt-3 hidden lg:flex items-center gap-2">
+        <div className="hidden lg:flex items-center gap-2">
           <label className="cursor-pointer flex items-center gap-2">
             <input
               type="checkbox"
@@ -52,7 +75,6 @@ const Sidebar = () => {
           </span>
         </div>
       </div>
-
       <div className="overflow-y-auto w-full py-3">
         {filteredUsers.map((user) => (
           <button
@@ -70,11 +92,7 @@ const Sidebar = () => {
           >
             <div className="relative mx-auto lg:mx-0">
               <img
-                src={
-                  user.profilePic && typeof user.profilePic === "string"
-                    ? user.profilePic
-                    : "/avatar.png"
-                }
+                src={user.profilePic ? user.profilePic : "/avatar.png"}
                 alt={user.fullName}
                 className="size-10 lg:size-12 object-cover rounded-full"
               />

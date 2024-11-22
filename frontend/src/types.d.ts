@@ -12,17 +12,22 @@ export type FormDataSignup = {
 };
 
 export type FormDataUpdateProfile = {
-  profilePic: string | ArrayBuffer | null;
+  profilePic: string | null;
 };
 
 export type User = {
   _id: mongoose.Schema.Types.ObjectId;
   fullName: string;
   email: string;
-  profilePic: string | ArrayBuffer | null;
+  profilePic: string | null;
   isSuperUser: boolean;
   createdAt: string;
   updatedAt: string;
+};
+
+export type PreviewType = {
+  name: string;
+  data: string;
 };
 
 export type Message = {
@@ -31,6 +36,7 @@ export type Message = {
   receiverId: mongoose.Schema.Types.ObjectId;
   text: string;
   image: string;
+  pdf: string;
   createdAt: string;
   updatedAt: string;
 };

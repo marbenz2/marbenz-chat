@@ -15,8 +15,7 @@ const ChatHeader = () => {
             <div className="size-10 rounded-full relative">
               <img
                 src={
-                  selectedUser?.profilePic &&
-                  typeof selectedUser?.profilePic === "string"
+                  selectedUser?.profilePic
                     ? selectedUser.profilePic
                     : "/avatar.png"
                 }

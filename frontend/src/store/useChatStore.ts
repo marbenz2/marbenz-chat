@@ -2,7 +2,7 @@ import { create } from "zustand";
 import toast from "react-hot-toast";
 import { axiosInstance, AxiosError } from "@/lib/axios";
 import { useAuthStore } from "./useAuthStore";
-import { Message, User } from "@/types";
+import { Message, PreviewType, User } from "@/types";
 
 interface MessageState {
   messages: Message[];
@@ -14,7 +14,8 @@ interface MessageState {
   getMessages: (userId: string) => Promise<void>;
   sendMessage: (messageData: {
     text: string;
-    image: string | ArrayBuffer | null;
+    image: PreviewType | null;
+    pdf: PreviewType | null;
   }) => Promise<void>;
   subscribeToMessages: () => void;
   unsubscribeFromMessages: () => void;

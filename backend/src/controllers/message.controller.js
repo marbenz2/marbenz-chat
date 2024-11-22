@@ -39,15 +39,28 @@ export const getMessages = async (req, res) => {
 
 export const sendMessage = async (req, res) => {
   try {
-    const { text, image } = req.body;
+    const { text, image, pdf } = req.body;
     const { id: receiverId } = req.params;
     const senderId = req.user._id;
 
     let imageUrl;
     if (image) {
       // Upload base64 image to cloudinary
-      const uploadResponse = await cloudinary.uploader.upload(image);
+      const uploadResponse = await cloudinary.uploader.upload(image.data, {
+        upload_preset: "chat-app",
+        filename_override: image.name,
+      });
       imageUrl = uploadResponse.secure_url;
+    }
+
+    let pdfUrl;
+    if (pdf) {
+      // Upload base64 pdf to cloudinary
+      const uploadResponse = await cloudinary.uploader.upload(pdf.data, {
+        upload_preset: "chat-app",
+        filename_override: pdf.name,
+      });
+      pdfUrl = uploadResponse.secure_url;
     }
 
     const newMessage = new Message({
@@ -55,6 +68,7 @@ export const sendMessage = async (req, res) => {
       receiverId,
       text,
       image: imageUrl,
+      pdf: pdfUrl,
     });
 
     await newMessage.save();

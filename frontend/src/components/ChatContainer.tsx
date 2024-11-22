@@ -5,7 +5,7 @@ import ChatHeader from "./ChatHeader";
 import MessageInput from "./MessageInput";
 import MessageSkeleton from "./skeletons/MessageSkeleton";
 import { useAuthStore } from "../store/useAuthStore";
-import { formatMessageTime } from "../lib/utils";
+import { formatMessageTime, getImageFromPdf } from "../lib/utils";
 
 const ChatContainer = () => {
   const {
@@ -63,12 +63,10 @@ const ChatContainer = () => {
                 <img
                   src={
                     message.senderId === authUser?._id
-                      ? authUser?.profilePic &&
-                        typeof authUser?.profilePic === "string"
+                      ? authUser?.profilePic
                         ? authUser?.profilePic
                         : "/avatar.png"
-                      : selectedUser?.profilePic &&
-                        typeof selectedUser?.profilePic === "string"
+                      : selectedUser?.profilePic
                       ? selectedUser?.profilePic
                       : "/avatar.png"
                   }
@@ -88,6 +86,16 @@ const ChatContainer = () => {
                   alt="Attachment"
                   className="sm:max-w-[200px] rounded-md mb-2"
                 />
+              )}
+              {message.pdf && (
+                <a href={message.pdf} rel="noopener noreferrer" target="_blank">
+                  <img
+                    src={getImageFromPdf(message.pdf)}
+                    alt="Attachment"
+                    className="sm:max-w-[200px] rounded-md mb-2"
+                  />
+                  {message.pdf.split("/").pop()}
+                </a>
               )}
               {message.text && (
                 <pre className="text-sm md:text-base whitespace-pre-wrap font-sans">
