@@ -71,7 +71,7 @@ const Sidebar = () => {
             <div className="relative mx-auto lg:mx-0">
               <img
                 src={
-                  typeof user.profilePic === "string"
+                  user.profilePic && typeof user.profilePic === "string"
                     ? user.profilePic
                     : "/avatar.png"
                 }

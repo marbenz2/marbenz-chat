@@ -38,9 +38,10 @@ const ProfilePage = () => {
             <div className="relative">
               <img
                 src={
-                  typeof selectedImg === "string"
+                  selectedImg && typeof selectedImg === "string"
                     ? selectedImg
-                    : typeof authUser?.profilePic === "string"
+                    : authUser?.profilePic &&
+                      typeof authUser?.profilePic === "string"
                     ? authUser?.profilePic
                     : "/avatar.png"
                 }
