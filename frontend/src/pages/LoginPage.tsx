@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useAuthStore } from "@/store/useAuthStore";
 import AuthImagePattern from "@/components/AuthImagePattern";
 import { Link } from "react-router-dom";
-import { Eye, EyeOff, Loader2, Lock, Mail, MessageSquare } from "lucide-react";
+import { Eye, EyeOff, Loader2, Lock, Mail } from "lucide-react";
 import { FormDataLogin } from "@/types";
 
 export default function LoginPage() {
@@ -27,13 +27,14 @@ export default function LoginPage() {
           {/* Logo */}
           <div className="text-center mb-8">
             <div className="flex flex-col items-center gap-2 group">
-              <div
-                className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center group-hover:bg-primary/20
-              transition-colors"
-              >
-                <MessageSquare className="w-6 h-6 text-primary" />
+              <div className="size-12 rounded-2xl bg-primary/10 flex items-center justify-center">
+                <img
+                  src="/logo-192x192.webp"
+                  alt="logo"
+                  className="rounded-full size-8"
+                />
               </div>
-              <h1 className="text-2xl font-bold mt-2">Willkommen zurück</h1>
+              <h1 className="text-2xl font-bold mt-2">Willkommen!</h1>
               <p className="text-base-content/60">Melde dich jetzt an.</p>
             </div>
           </div>
@@ -120,7 +121,7 @@ export default function LoginPage() {
 
       {/* Right Side - Image/Pattern */}
       <AuthImagePattern
-        title={"Willkommen zurück!"}
+        title={"Willkommen!"}
         subtitle={
           "Melde dich an und schreibe mit mir. Ich freue mich auf dich!"
         }

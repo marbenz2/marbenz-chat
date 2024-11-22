@@ -1,14 +1,6 @@
 import AuthImagePattern from "@/components/AuthImagePattern";
 import { useAuthStore } from "@/store/useAuthStore";
-import {
-  Eye,
-  EyeOff,
-  Loader2,
-  Lock,
-  Mail,
-  MessageSquare,
-  User,
-} from "lucide-react";
+import { Eye, EyeOff, Loader2, Lock, Mail, User } from "lucide-react";
 import { useState } from "react";
 import toast from "react-hot-toast";
 import { Link } from "react-router-dom";
@@ -51,8 +43,12 @@ export default function SignUpPage() {
           {/* LOGO */}
           <div className="text-center mb-8">
             <div className="flex flex-col items-center gap-2 group">
-              <div className="size-12 rounded-xl bg-primary/10 flex items-center justify-center group-hover:bg-primary/20 transition-colors">
-                <MessageSquare className="size-6 text-primary" />
+              <div className="size-12 rounded-2xl bg-primary/10 flex items-center justify-center">
+                <img
+                  src="/logo-192x192.webp"
+                  alt="logo"
+                  className="rounded-full size-8"
+                />
               </div>
               <h1 className="text-2xl font-bold mt-2">
                 Erstelle einen Account
