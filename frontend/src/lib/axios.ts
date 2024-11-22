@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 
 export const axiosInstance = axios.create({
   baseURL:
@@ -7,3 +7,5 @@ export const axiosInstance = axios.create({
       : "/api",
   withCredentials: true,
 });
+
+export type { AxiosError };

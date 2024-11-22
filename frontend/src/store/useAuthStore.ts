@@ -1,4 +1,4 @@
-import { axiosInstance } from "@/lib/axios";
+import { axiosInstance, AxiosError } from "@/lib/axios";
 import {
   User,
   FormDataLogin,
@@ -59,7 +59,14 @@ export const useAuthStore = create<AuthState>((set, get) => ({
       toast.success("Account created successfully");
       get().connectSocket();
     } catch (error) {
-      toast.error(error.response.data.message);
+      const axiosError = error as AxiosError;
+      const errorMessage =
+        axiosError.response?.data &&
+        typeof axiosError.response.data === "object" &&
+        "message" in axiosError.response.data
+          ? (axiosError.response.data as { message: string }).message
+          : "An error occurred";
+      toast.error(errorMessage);
     } finally {
       set({ isSigningUp: false });
     }
@@ -74,7 +81,14 @@ export const useAuthStore = create<AuthState>((set, get) => ({
 
       get().connectSocket();
     } catch (error) {
-      toast.error(error.response.data.message);
+      const axiosError = error as AxiosError;
+      const errorMessage =
+        axiosError.response?.data &&
+        typeof axiosError.response.data === "object" &&
+        "message" in axiosError.response.data
+          ? (axiosError.response.data as { message: string }).message
+          : "An error occurred";
+      toast.error(errorMessage);
     } finally {
       set({ isLoggingIn: false });
     }
@@ -87,7 +101,14 @@ export const useAuthStore = create<AuthState>((set, get) => ({
       toast.success("Logged out successfully");
       get().disconnectSocket();
     } catch (error) {
-      toast.error(error.response.data.message);
+      const axiosError = error as AxiosError;
+      const errorMessage =
+        axiosError.response?.data &&
+        typeof axiosError.response.data === "object" &&
+        "message" in axiosError.response.data
+          ? (axiosError.response.data as { message: string }).message
+          : "An error occurred";
+      toast.error(errorMessage);
     }
   },
 
@@ -98,8 +119,14 @@ export const useAuthStore = create<AuthState>((set, get) => ({
       set({ authUser: res.data });
       toast.success("Profile updated successfully");
     } catch (error) {
-      console.log("error in update profile:", error);
-      toast.error(error.response.data.message);
+      const axiosError = error as AxiosError;
+      const errorMessage =
+        axiosError.response?.data &&
+        typeof axiosError.response.data === "object" &&
+        "message" in axiosError.response.data
+          ? (axiosError.response.data as { message: string }).message
+          : "An error occurred";
+      toast.error(errorMessage);
     } finally {
       set({ isUpdatingProfile: false });
     }

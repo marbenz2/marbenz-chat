@@ -1,6 +1,6 @@
 import { create } from "zustand";
 import toast from "react-hot-toast";
-import { axiosInstance } from "../lib/axios";
+import { axiosInstance, AxiosError } from "@/lib/axios";
 import { useAuthStore } from "./useAuthStore";
 import { Message, User } from "@/types";
 
@@ -34,7 +34,14 @@ export const useChatStore = create<MessageState>((set, get) => ({
       const res = await axiosInstance.get("/messages/users");
       set({ users: res.data });
     } catch (error) {
-      toast.error(error.response.data.message);
+      const axiosError = error as AxiosError;
+      const errorMessage =
+        axiosError.response?.data &&
+        typeof axiosError.response.data === "object" &&
+        "message" in axiosError.response.data
+          ? (axiosError.response.data as { message: string }).message
+          : "An error occurred";
+      toast.error(errorMessage);
     } finally {
       set({ isUsersLoading: false });
     }
@@ -46,7 +53,14 @@ export const useChatStore = create<MessageState>((set, get) => ({
       const res = await axiosInstance.get(`/messages/${userId}`);
       set({ messages: res.data });
     } catch (error) {
-      toast.error(error.response.data.message);
+      const axiosError = error as AxiosError;
+      const errorMessage =
+        axiosError.response?.data &&
+        typeof axiosError.response.data === "object" &&
+        "message" in axiosError.response.data
+          ? (axiosError.response.data as { message: string }).message
+          : "An error occurred";
+      toast.error(errorMessage);
     } finally {
       set({ isMessagesLoading: false });
     }
@@ -61,7 +75,14 @@ export const useChatStore = create<MessageState>((set, get) => ({
       );
       set({ messages: [...messages, res.data] });
     } catch (error) {
-      toast.error(error.response.data.message);
+      const axiosError = error as AxiosError;
+      const errorMessage =
+        axiosError.response?.data &&
+        typeof axiosError.response.data === "object" &&
+        "message" in axiosError.response.data
+          ? (axiosError.response.data as { message: string }).message
+          : "An error occurred";
+      toast.error(errorMessage);
     }
   },
 
